@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Tasks for User</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div class="container">
+    <h1>Tasks for: <span th:text="${username}">User</span></h1>
+
+    <ul class="task-list">
+        <!-- Iterate over the tasks and display each task's title with delete and mark as done buttons -->
+        <li th:each="task : ${tasks}" class="task-item">
+            <div class="task-title">
+                <span th:classappend="${task.completed} ? 'completed-task' : 'incomplete-task'" th:text="${task.title}">Task Title</span>
+            </div>
+
+            <div class="task-actions">
+                <form th:action="@{/taskManager/markTaskDone}" method="post" class="left-action">
+                    <input type="hidden" name="taskId" th:value="${task.id}" />
+                    <input type="hidden" name="username" th:value="${username}" />
+                    <button type="submit" th:if="${!task.completed}">Mark as Done</button>
+                </form>
+
+                <form th:action="@{/taskManager/deleteTask}" method="post" class="right-action">
+                    <input type="hidden" name="taskId" th:value="${task.id}" />
+                    <input type="hidden" name="username" th:value="${username}" />
+                    <button type="submit">Delete</button>
+                </form>
+            </div>
+        </li>
+    </ul>
+
+    <form action="/taskManager/addTask" method="get" class="add-task-form">
+        <button type="submit">Add Task</button>
+    </form>
+</div>
+</body>
+</html>
