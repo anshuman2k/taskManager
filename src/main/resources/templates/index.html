@@ -7,6 +7,7 @@
 </head>
 <body>
 <div class="container">
+    <span class="message" th:if="${message != null}">[[${message}]]</span>
     <h1>Choose From Below Options</h1>
     <form th:action="@{/loginUser}" method="get">
         <p><input type="submit" value="Login" /></p>

@@ -9,6 +9,7 @@
 <div class="container">
     <h1>:SignUp:</h1>
     <form th:action="@{/signupUser}" method="post">
+        <span class="error-message" th:if="${errorMessage != null}">[[${errorMessage}]]</span>
         <div class="form-group">
             <label for="username">User Name:</label>
             <input type="text" id="username" name="username" required>

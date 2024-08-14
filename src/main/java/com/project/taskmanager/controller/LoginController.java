@@ -44,25 +44,25 @@ public class LoginController {
                                    @RequestParam(name = "password") String password,
                                    Model model) {
         if (userService.userExists(username)) {
-            // Authentication successful, redirect to a secure area
+            // SignUp Failed, add an error message to the model
             model.addAttribute("errorMessage","Username already taken. Please choose a different username.");
             return "signup";
         } else {
-            // Authentication failed, add an error message to the model
+            // SignUp Successful, redirect to login page
             userService.createUser(username,password);
-            return "redirect:/loginUser"; // Re-render the login page with error
+            return "redirect:/loginUser";
         }
     }
 
     @GetMapping("/logout")
-    public String logout(SessionStatus sessionStatus) {
-        sessionStatus.setComplete(); // Clear session attributes
-        return "redirect:/login";
+    public String logout(SessionStatus sessionStatus, RedirectAttributes redirectAttributes) {
+        sessionStatus.setComplete();
+        redirectAttributes.addFlashAttribute("message", "Logged out successfully!!!");
+        return "redirect:/";
     }
 
-
     @GetMapping("/signup")
-    public String printHello(){
+    public String signup(){
         return "signup";
     }
 }
